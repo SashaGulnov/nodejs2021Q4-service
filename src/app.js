@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
@@ -20,5 +20,35 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/users', userRouter);
+
+module.exports = app;
+*/
+
+const Koa = require('koa');
+
+const app = new Koa();
+const Router = require('koa-router');
+const bodyParser = require('koa-body');
+
+const rootRouter = new Router();
+const userRouter = require('./resources/users/user.router');
+
+
+
+rootRouter.get('/', ctx => {
+  ctx.body = "hey there!";
+})
+
+
+app
+
+.use( bodyParser() )
+    .use( rootRouter.routes() )
+    .use( userRouter.routes() )
+    .use( rootRouter.allowedMethods() )
+    .use( userRouter.allowedMethods() )
+
+
+    
 
 module.exports = app;
