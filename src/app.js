@@ -34,15 +34,12 @@ const rootRouter = new Router();
 const userRouter = require('./resources/users/user.router');
 
 
-
 rootRouter.get('/', ctx => {
   ctx.body = "hey there!";
 })
 
 
-app
-
-.use( bodyParser() )
+app .use( bodyParser() )
     .use( rootRouter.routes() )
     .use( userRouter.routes() )
     .use( rootRouter.allowedMethods() )
