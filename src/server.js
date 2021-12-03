@@ -8,4 +8,6 @@ app.listen(PORT, () =>
 
 const app = require('./app');
 
-app.listen(4000);
+app.listen(4000, () => {
+  // console.log('Server is started on 4000');
+});

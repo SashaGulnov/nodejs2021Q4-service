@@ -32,6 +32,7 @@ const bodyParser = require('koa-body');
 
 const rootRouter = new Router();
 const userRouter = require('./resources/users/user.router');
+const boardRouter = require( './resources/boards/board.router')
 
 
 rootRouter.get('/', ctx => {
@@ -42,8 +43,10 @@ rootRouter.get('/', ctx => {
 app .use( bodyParser() )
     .use( rootRouter.routes() )
     .use( userRouter.routes() )
+    .use( boardRouter.routes() )
     .use( rootRouter.allowedMethods() )
     .use( userRouter.allowedMethods() )
+    .use( boardRouter.allowedMethods() )
 
 
     
