@@ -32,7 +32,7 @@ userRouter
             const user = new User( ctx.request.body );
             const postedUser = usersService.userPost( user );
             ctx.response.status = 201;
-            ctx.body = postedUser;
+            ctx.body = User.toResponse( postedUser );
           })
           .put('/users/:id', ctx => {
             const userId = ctx.params.id;

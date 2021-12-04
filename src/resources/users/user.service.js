@@ -10,13 +10,8 @@ const usersArray  = require("./user.memory");
 const userSearch = ( userId ) => {
     let foundUser;
     try {
-        // for (const user of usersArray) {
-        //     console.log(user)
-        //     if (user.id === userId) {
-        //         foundUser = user;
-        //     }
-        // }
-        foundUser = usersArray.filter(user => user.id === userId)
+        
+        foundUser = usersArray.find(user => user.id === userId)
         
     }
     catch (e) {
@@ -56,7 +51,6 @@ const userUpdate = ( foundUser, newOptions ) => {
         return updatedUser;
     }
     catch(e) {
-        console.log(e)
         return e;
     }
 }
@@ -67,8 +61,7 @@ const userDelete = ( foundUser ) => {
     usersArray.splice(userIndex, 1);
     }
     catch (e) {
-        console.log(e);
-        return e;
+        throw new Error (e)
     }
     return usersArray;
 }

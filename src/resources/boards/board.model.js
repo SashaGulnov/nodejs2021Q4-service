@@ -1,20 +1,27 @@
 const {v4: uuidv4} = require('uuid');
 
+let order = 0;
 class Board {
+  
   constructor({
     id = uuidv4(),
     title = 'BOARD',
-    columns = {
-        id: uuidv4(),
+    columns = [{ id: uuidv4(),
         title: 'COLUMN',
-        order: 0
-    }
+        order: order+=1 }]
   } = {}) {
     this.id = id;
     this.title = title;
-    this.columns = columns;
-    this.columns.title = columns.title;
-    this.columns.order = columns.order;
+    this.columns = [];
+    columns.forEach(column => { 
+      this.columns.push(
+        {id: uuidv4(),
+        title: 'COLUMN',
+        order: order+=1,
+        ...column});}
+    );   
+     
+
   }
 
 //   static toResponse(user) {
