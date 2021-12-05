@@ -40,7 +40,7 @@ userRouter
             const foundUser = usersService.userSearch( userId );
             const updatedUser = usersService.userUpdate( foundUser, newOptions )
             
-            ctx.body = updatedUser;
+            ctx.body = User.toResponse( updatedUser );
           })
           .delete('/users/:id', ctx => {
             const userId = ctx.params.id;

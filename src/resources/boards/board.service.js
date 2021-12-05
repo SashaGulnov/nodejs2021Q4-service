@@ -1,4 +1,5 @@
 const boardsArray = require( './board.memory' );
+const tasksService = require('../tasks/task.service');
 // const Board = require ('./board.model');
 
 const getAll = () => boardsArray;
@@ -7,12 +8,12 @@ const boardSearch = (boardId) => {
   let foundBoard;
   try {
     foundBoard = boardsArray.find(board => board.id === boardId);
-    
+    return foundBoard;
   }
   catch ( e ) {
     throw new Error( e );
   }
-  return foundBoard;
+  
 }
 
 const boardPost = (board) => {
@@ -22,7 +23,7 @@ const boardPost = (board) => {
 
         // console.log(boardsArray[0].columns)
 
-    return boardsArray
+    return board
   }
   catch (e) {
     throw new Error(e);
@@ -33,9 +34,8 @@ const boardUpdate = (foundBoard, newOptions) => {
   try {
     const boardIndex = boardsArray.indexOf( foundBoard );
 
-        console.log(foundBoard[0].id);
         const updatedBoard = {
-            "id": foundBoard[0].id,
+            "id": foundBoard.id,
             "title": newOptions.title,
             "columns": newOptions.columns,
         }
@@ -55,6 +55,14 @@ const boardDelete = (foundBoard) => {
     const boardIndex = boardsArray.indexOf(foundBoard);
 
     boardsArray.splice(boardIndex, 1);
+
+     // получить таски по userid, userid => null
+    const tasks = tasksService.getAll(foundBoard.id);
+    tasks.map(task => tasksService.taskDelete(task))
+
+
+
+
   }
   catch (e) {
     throw new Error(e)
