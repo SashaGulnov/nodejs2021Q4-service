@@ -21,24 +21,10 @@ const taskSearch = ( taskID ) => {
 }
 
 const columnSearch = (board) => {
-  // console.log(board.columns);
   const columnId = board.columns;
   return columnId;
 }
 
-const columnCheck = (board, columnId) => {
-  const check = board.columns.find(column => column.id === columnId )
-  // console.log(check);
-    // console.log(column.id);
-    // console.log(columnId);
-    // console.log(String(column.id) === String(columnId));
-    // if (column.id === columnId) {
-    //   console.log('go');
-    //   return true;
-    // }
-  // });
-  return check;
-}
 
 const taskDelete = ( foundTask ) => {
   try {
@@ -56,7 +42,6 @@ const taskUpdate = (foundTask, newOptions) => {
   try {
     const taskIndex = tasksArray.indexOf( foundTask );
 
-        // console.log(foundTask.id);
         const updatedTask = {
             "id": foundTask.id,
             "title": newOptions.title,
@@ -67,7 +52,6 @@ const taskUpdate = (foundTask, newOptions) => {
             "columnId": newOptions.columnId
         }
 
-        // console.log(updatedBoard)
         
         tasksArray[taskIndex] = updatedTask
         return updatedTask;
@@ -78,4 +62,4 @@ const taskUpdate = (foundTask, newOptions) => {
 }
 
 
-module.exports = {getAll, columnSearch, taskPost, taskSearch, columnCheck, taskUpdate, taskDelete,  tasksArray}
+module.exports = {getAll, columnSearch, taskPost, taskSearch, taskUpdate, taskDelete,  tasksArray}

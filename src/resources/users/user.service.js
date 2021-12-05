@@ -1,9 +1,3 @@
-/* const usersRepo = require('./user.memory.repository');
-
-const getAll = () => usersRepo.getAll();
-
-module.exports = { getAll };
-*/
 const usersArray  = require("./user.memory");
 const tasksService = require('../tasks/task.service');
 const boardsService = require('../boards/board.service');
@@ -32,7 +26,6 @@ const userPost = (user) => {
         return user;
     }
     catch (e) {
-        // console.log(e);
         return e;
     }
 }
@@ -61,7 +54,6 @@ const userDelete = ( foundUser ) => {
     try {
     const userIndex = usersArray.indexOf(foundUser);
     usersArray.splice(userIndex, 1);
-    // получить таски по userid, userid => null
     const tasks = [];
     const boards = boardsService.getAll();
     boards.map(board => {

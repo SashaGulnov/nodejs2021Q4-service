@@ -1,6 +1,5 @@
 const boardsArray = require( './board.memory' );
 const tasksService = require('../tasks/task.service');
-// const Board = require ('./board.model');
 
 const getAll = () => boardsArray;
 
@@ -19,9 +18,6 @@ const boardSearch = (boardId) => {
 const boardPost = (board) => {
   try {
     boardsArray.push(board);
-            // console.log(board)
-
-        // console.log(boardsArray[0].columns)
 
     return board
   }
@@ -40,7 +36,6 @@ const boardUpdate = (foundBoard, newOptions) => {
             "columns": newOptions.columns,
         }
 
-        // console.log(updatedBoard)
         
         boardsArray[boardIndex] = updatedBoard
         return updatedBoard;
@@ -56,7 +51,6 @@ const boardDelete = (foundBoard) => {
 
     boardsArray.splice(boardIndex, 1);
 
-     // получить таски по userid, userid => null
     const tasks = tasksService.getAll(foundBoard.id);
     tasks.map(task => tasksService.taskDelete(task))
 

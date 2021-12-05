@@ -8,7 +8,7 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/SashaGulnov/nodejs2021Q4-service.git
 ```
 
 ## Installing NPM modules
@@ -22,10 +22,6 @@ npm install
 ```
 npm start
 ```
-
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 ## Testing
 
@@ -70,3 +66,24 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+
+For `User`, `Board` and `Task` REST endpoints with separate router paths should be created
+    * `User` (`/users` route)
+      * `GET /users` - get all users (remove password from response)
+      * `GET /users/:userId` - get the user by id (ex. “/users/123”) (remove password from response)
+      * `POST /users` - create user
+      * `PUT /users/:userId` - update user
+      * `DELETE /users/:userId` - delete user
+    * `Board` (`/boards` route)
+      * `GET /boards` - get all boards
+      * `GET /boards/:boardId` - get the board by id
+      * `POST /boards` - create board
+      * `PUT /boards/:boardId` - update board
+      * `DELETE /boards/:boardId` - delete board
+    * `Task` (`boards/:boardId/tasks` route)
+      * `GET boards/:boardId/tasks` - get all tasks
+      * `GET boards/:boardId/tasks/:taskId` - get the task by id
+      * `POST boards/:boardId/tasks` - create task
+      * `PUT boards/:boardId/tasks/:taskId` - update task
+      * `DELETE boards/:boardId/tasks/:taskId` - delete task

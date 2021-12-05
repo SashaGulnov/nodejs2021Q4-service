@@ -1,15 +1,3 @@
-/* const router = require('express').Router();
-const User = require('./user.model');
-const usersService = require('./user.service');
-
-router.route('/').get(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(User.toResponse));
-});
-
-module.exports = router;
-*/
 const Router = require('koa-router');
 const User = require('./user.model');
 const usersService = require('./user.service');
@@ -28,7 +16,6 @@ userRouter
             ctx.body = User.toResponse( foundUser );
           })
           .post('/users', ctx => {
-            // console.log(ctx.request.body);
             const user = new User( ctx.request.body );
             const postedUser = usersService.userPost( user );
             ctx.response.status = 201;
