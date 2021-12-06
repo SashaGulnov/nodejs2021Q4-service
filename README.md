@@ -67,8 +67,7 @@ Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
-
-For `User`, `Board` and `Task` REST endpoints with separate router paths should be created
+- For `User`, `Board` and `Task` REST endpoints with separate router paths should be created
     * `User` (`/users` route)
       * `GET /users` - get all users (remove password from response)
       * `GET /users/:userId` - get the user by id (ex. “/users/123”) (remove password from response)
