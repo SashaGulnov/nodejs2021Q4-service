@@ -6,8 +6,8 @@ import bodyParser from 'koa-body';
 
 const rootRouter = new Router();
 import { userRouter } from './resources/users/user.router';
-import boardRouter from './resources/boards/board.router';
-import taskRouter from './resources/tasks/task.router';
+import { boardRouter } from './resources/boards/board.router';
+import { taskRouter } from './resources/tasks/task.router';
 
 
 rootRouter.get('/', ctx => {
@@ -27,5 +27,4 @@ app.use(bodyParser())
 
 
 
-
-module.exports = app;
+export { app };

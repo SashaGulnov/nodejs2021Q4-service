@@ -1,79 +1,58 @@
 import { usersArray } from "./user.memory";
-import tasksService from '../tasks/task.service';
-import boardsService from '../boards/board.service';
+import { TasksService } from '../tasks/task.service';
+import { BoardsService } from '../boards/board.service';
 import { User } from "./user.model";
-
+import { Board } from "../boards/board.model";
+import { Task } from "../tasks/task.model";
+import { tasksArray } from '../tasks/task.memory'
 
 class UsersService {
-  static userSearch = (userId: string): User => {
-    let foundUser: User;
-    try {
-
-      foundUser = usersArray.find((user: User): void => { user.id === userId })
-
-    }
-    catch (e) {
-      foundUser = e;
-      throw new Error(e);
-
-    }
+  static userSearch = (userId: User['id']): User | undefined => {
+    let foundUser: User | undefined;
+    foundUser = usersArray.find((user: User): void => { user.id === userId })
     return foundUser
   }
 
-  static getAll = () => usersArray;
+  static getAll = (): User[] => usersArray;
 
-  static userPost = (user) => {
-    try {
-      usersArray.push(user);
-      return user;
-    }
-    catch (e) {
-      return e;
-    }
+  static userPost = (user: User): User => {
+    usersArray.push(user);
+    return user;
   }
 
-  static userUpdate = (foundUser, newOptions) => {
 
-    try {
-      const userIndex = usersArray.indexOf(foundUser);
 
-      const updatedUser = {
-        "id": foundUser.id,
-        "name": newOptions.name,
-        "login": newOptions.login,
-        "password": newOptions.password
-      }
+  static userUpdate = (foundUser: User, newOptions: User): User => {
 
-      usersArray[userIndex] = updatedUser
-      return updatedUser;
+    const userIndex: number = usersArray.indexOf(foundUser);
+
+    const updatedUser: User = {
+      "id": foundUser.id,
+      "name": newOptions.name,
+      "login": newOptions.login,
+      "password": newOptions.password
     }
-    catch (e) {
-      return e;
-    }
+    usersArray[userIndex] = updatedUser
+    return updatedUser;
   }
 
-  static userDelete = (foundUser) => {
-    try {
-      const userIndex = usersArray.indexOf(foundUser);
-      usersArray.splice(userIndex, 1);
-      const tasks = [];
-      const boards = boardsService.getAll();
-      boards.map(board => {
+  static userDelete = (foundUser: User): typeof usersArray => {
 
-        tasks.push(...tasksService.getAll(board.id))
-        return tasks
-      })
-      const filteredTasks = tasks.filter(task => task.userId === foundUser.id);
-      filteredTasks.map(task => {
-        const taskIndex = tasksService.tasksArray.indexOf(task);
-        tasksService.tasksArray[taskIndex].userId = null
-        return tasksService.tasksArray;
-      });
+    const userIndex: number = usersArray.indexOf(foundUser);
+    usersArray.splice(userIndex, 1);
+    const tasks: Task[] = [];
+    const boards: Board[] = BoardsService.getAll();
+    boards.map((board: Board): Task[] => {
+      tasks.push(...TasksService.getAll(board.id))
+      return tasks
+    })
+    const filteredTasks: Task[] = tasks.filter(task => task.userId === foundUser.id);
+    filteredTasks.map(task => {
+      const taskIndex: number = tasksArray.indexOf(task);
+      tasksArray[taskIndex].userId = null
+      return tasksArray;
+    });
 
-    }
-    catch (e) {
-      throw new Error(e)
-    }
     return usersArray;
   }
 }
