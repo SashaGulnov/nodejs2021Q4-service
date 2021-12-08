@@ -37,7 +37,7 @@ taskRouter
       if (foundTask === undefined) {
         throw new Error("Task not found!");
       }
-      const newOptions = ctx.request.body;
+      const newOptions: Task = ctx.request.body;
       const updatedTask = TasksService.taskUpdate(foundTask, newOptions);
       ctx.body = updatedTask;
     }

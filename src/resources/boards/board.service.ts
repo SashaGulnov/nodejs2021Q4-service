@@ -6,64 +6,39 @@ class BoardsService {
 
   static getAll = (): Board[] => boardsArray;
 
-  static boardSearch = (boardId) => {
-    let foundBoard;
-    try {
-      foundBoard = boardsArray.find(board => board.id === boardId);
-      return foundBoard;
+  static boardSearch = (boardId: Board['id']): Board | undefined => {
+    let foundBoard: Board | undefined;
+    foundBoard = boardsArray.find(board => board.id === boardId);
+    return foundBoard;
+  }
+
+  static boardPost = (board: Board) => {
+    boardsArray.push(board);
+    return board
+  }
+
+  static boardUpdate = (foundBoard: Board, newOptions: Board): Board => {
+
+    const boardIndex = boardsArray.indexOf(foundBoard);
+
+    const updatedBoard: Board = {
+      "id": foundBoard.id,
+      "title": newOptions.title,
+      "columns": newOptions.columns,
     }
-    catch (e) {
-      throw new Error(e);
-    }
+    boardsArray[boardIndex] = updatedBoard
+    return updatedBoard;
 
   }
 
-  static boardPost = (board) => {
-    try {
-      boardsArray.push(board);
+  static boardDelete = (foundBoard: Board): typeof boardsArray => {
 
-      return board
-    }
-    catch (e) {
-      throw new Error(e);
-    }
-  }
+    const boardIndex: number = boardsArray.indexOf(foundBoard);
 
-  static boardUpdate = (foundBoard, newOptions) => {
-    try {
-      const boardIndex = boardsArray.indexOf(foundBoard);
+    boardsArray.splice(boardIndex, 1);
 
-      const updatedBoard = {
-        "id": foundBoard.id,
-        "title": newOptions.title,
-        "columns": newOptions.columns,
-      }
-
-
-      boardsArray[boardIndex] = updatedBoard
-      return updatedBoard;
-    }
-    catch (e) {
-      throw new Error(e);
-    }
-  }
-
-  static boardDelete = (foundBoard) => {
-    try {
-      const boardIndex = boardsArray.indexOf(foundBoard);
-
-      boardsArray.splice(boardIndex, 1);
-
-      const tasks = TasksService.getAll(foundBoard.id);
-      tasks.map(task => TasksService.taskDelete(task))
-
-
-
-
-    }
-    catch (e) {
-      throw new Error(e)
-    }
+    const tasks = TasksService.getAll(foundBoard.id);
+    tasks.map(task => TasksService.taskDelete(task))
     return boardsArray;
   }
 }
