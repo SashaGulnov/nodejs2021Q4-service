@@ -1,39 +1,41 @@
 import Router from 'koa-router';
+import { Context } from 'koa';
 import { Task } from './task.model';
 import { TasksService } from './task.service';
+import { Board } from '../boards/board.model';
 
 
 const taskRouter = new Router();
 
 taskRouter
-  .get('/boards/:boardId/tasks', ctx => {
-    ctx.body = TasksService.getAll(ctx.params.boardId);
+  .get('/boards/:boardId/tasks', (ctx: Context): void => {
+    const id: Board["id"] = ctx.params.boardId;
+    ctx.body = TasksService.getAll(id);
   })
-  .get('/boards/:boardId/tasks/:taskId', ctx => {
+  .get('/boards/:boardId/tasks/:taskId', (ctx: Context): void => {
     try {
-      const { taskId } = ctx.params
-      const foundTask = TasksService.taskSearch(taskId);
+      const id: Task["id"] = ctx.params.taskId
+      const foundTask = TasksService.taskSearch(id);
       if (foundTask === undefined) {
         throw new Error("Task not found!");
       }
       ctx.body = foundTask
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, "Task not found!")
     }
   })
-  .post('/boards/:boardId/tasks', ctx => {
-    const { boardId } = ctx.params;
+  .post('/boards/:boardId/tasks', (ctx: Context): void => {
+    const id: Board["id"] = ctx.params.boardId;
     const task = new Task(ctx.request.body);
-    task.boardId = boardId;
+    task.boardId = id;
     ctx.response.status = 201;
     ctx.body = TasksService.taskPost(task);
   })
-  .put('/boards/:boardId/tasks/:taskId', ctx => {
+  .put('/boards/:boardId/tasks/:taskId', (ctx: Context): void => {
     try {
-      const { taskId } = ctx.params
-      const foundTask = TasksService.taskSearch(taskId);
+      const id: Task["id"] = ctx.params.taskId
+      const foundTask = TasksService.taskSearch(id);
       if (foundTask === undefined) {
         throw new Error("Task not found!");
       }
@@ -42,14 +44,13 @@ taskRouter
       ctx.body = updatedTask;
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, 'Task not found!')
     }
   })
-  .delete('/boards/:boardId/tasks/:taskId', ctx => {
+  .delete('/boards/:boardId/tasks/:taskId', (ctx: Context): void => {
     try {
-      const { taskId } = ctx.params
-      const foundTask = TasksService.taskSearch(taskId);
+      const id: Task["id"] = ctx.params.taskId
+      const foundTask = TasksService.taskSearch(id);
       if (foundTask === undefined) {
         throw new Error("Task not found!");
       }
@@ -57,7 +58,6 @@ taskRouter
       ctx.response.status = 204;
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, 'Task not found!')
     }
   })

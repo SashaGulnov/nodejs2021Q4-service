@@ -2,9 +2,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 class User {
   id: string;
+
   name: string;
+
   login: string;
+
   password: string;
+
   constructor({
     id = uuidv4(),
     name = 'USER',
@@ -17,6 +21,11 @@ class User {
     this.password = password;
   }
 
+  /**
+   * Returns User without password
+   * @param user - object that contains id, name and login of User object 
+   * @returns User without password 
+   */
   static toResponse(user: { id: string; name: string; login: string }): { id: string; name: string; login: string } {
     const { id, name, login } = user;
     return { id, name, login };

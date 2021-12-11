@@ -1,4 +1,5 @@
 import Router from 'koa-router';
+import { Context } from 'koa';
 import { Board } from './board.model';
 import { BoardsService } from './board.service';
 
@@ -6,12 +7,12 @@ const boardRouter = new Router();
 
 
 boardRouter
-  .get('/boards', async ctx => {
+  .get('/boards', (ctx: Context): void => {
     ctx.body = BoardsService.getAll();
   })
-  .get('/boards/:id', ctx => {
+  .get('/boards/:id', (ctx: Context): void => {
     try {
-      const boardId = ctx.params.id;
+      const boardId: Board["id"] = ctx.params.id;
       const foundBoard = BoardsService.boardSearch(boardId);
       if (foundBoard === undefined) {
         throw new Error("Board not found!")
@@ -19,19 +20,18 @@ boardRouter
       ctx.body = foundBoard
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, "Board not found!")
     }
 
   })
-  .post('/boards', ctx => {
+  .post('/boards', (ctx: Context): void => {
     const board = new Board(ctx.request.body);
     ctx.response.status = 201;
     ctx.body = BoardsService.boardPost(board);
   })
-  .put('/boards/:id', ctx => {
+  .put('/boards/:id', (ctx: Context): void => {
     try {
-      const boardId = ctx.params.id;
+      const boardId: Board["id"] = ctx.params.id;
       const foundBoard = BoardsService.boardSearch(boardId);
       if (foundBoard === undefined) {
         throw new Error("Board not found!")
@@ -42,13 +42,12 @@ boardRouter
       ctx.body = new Board(updatedBoard);
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, "Board not found!")
     }
   })
-  .delete('/boards/:id', ctx => {
+  .delete('/boards/:id', (ctx: Context): void => {
     try {
-      const boardId = ctx.params.id;
+      const boardId: Board["id"] = ctx.params.id;
       const foundBoard = BoardsService.boardSearch(boardId);
       if (foundBoard === undefined) {
         throw new Error("Board not found!")
@@ -57,7 +56,6 @@ boardRouter
       ctx.response.status = 204;
     }
     catch (e) {
-      console.log(e);
       ctx.throw(404, "Board not found!")
 
     }

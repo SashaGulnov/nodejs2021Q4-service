@@ -7,21 +7,41 @@ import { Task } from "../tasks/task.model";
 import { tasksArray } from '../tasks/task.memory'
 
 class UsersService {
+  
+  /**
+   * Returns the array of all the users 
+   * @returns the array of all the users 
+   */
+  static getAll = (): User[] => usersArray;
+
+  /**
+   * Returns found user - instance of class User
+   * @param userId - id of serching user string
+   * @returns found user - instance of class User
+   */
   static userSearch = (userId: User['id']): User | undefined => {
-    let foundUser: User | undefined;
-    foundUser = usersArray.find((user: User): void => { user.id === userId })
+    
+    const foundUser: User | undefined = usersArray.find((user: User) => user.id === userId)
+    
     return foundUser
   }
 
-  static getAll = (): User[] => usersArray;
-
+  /**
+   * Returns posted user
+   * @param user - user to post - instance of class User
+   * @returns posted user
+   */
   static userPost = (user: User): User => {
     usersArray.push(user);
     return user;
   }
 
-
-
+  /**
+   * Updates user and returns updated user
+   * @param foundUser - user to update - instance of class User
+   * @param newOptions - requested object with options to update foundUser - instance of class User
+   * @returns updated user
+   */
   static userUpdate = (foundUser: User, newOptions: User): User => {
 
     const userIndex: number = usersArray.indexOf(foundUser);
@@ -36,6 +56,11 @@ class UsersService {
     return updatedUser;
   }
 
+  /**
+   * Deletes user, makes userId of every Task, assigned to this user equal null and returns array of rest users  
+   * @param foundUser - user to delete - instance of class User
+   * @returns array of rest users 
+   */
   static userDelete = (foundUser: User): typeof usersArray => {
 
     const userIndex: number = usersArray.indexOf(foundUser);

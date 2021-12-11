@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 let order = 0;
 class Board {
-
     id: string;
+
     title: string;
+
     columns: {
         id: string,
         title: string,
