@@ -1,16 +1,17 @@
-import Koa from 'koa';
+import Koa, { Context } from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-body';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { taskRouter } from './resources/tasks/task.router';
 
+
 const app = new Koa();
 
 const rootRouter = new Router();
 
 
-rootRouter.get('/', ctx => {
+rootRouter.get('/', (ctx: Context): void => {
   ctx.body = "Service is running!";
 })
 
