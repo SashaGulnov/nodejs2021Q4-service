@@ -4,6 +4,7 @@ import bodyParser from 'koa-body';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { taskRouter } from './resources/tasks/task.router';
+// import { log4js } from './common/loggerConfig';
 
 
 const app = new Koa();
