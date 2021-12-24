@@ -22,7 +22,8 @@ taskRouter
       ctx.body = foundTask
     }
     catch (e) {
-      ctx.throw(404, "Task not found!")
+      ctx.response.status = 404;
+      ctx.body="Task not found!";
     }
   })
   .post('/boards/:boardId/tasks', (ctx: Context): void => {
@@ -44,7 +45,8 @@ taskRouter
       ctx.body = updatedTask;
     }
     catch (e) {
-      ctx.throw(404, 'Task not found!')
+      ctx.response.status = 404;
+      ctx.body="Task not found!";
     }
   })
   .delete('/boards/:boardId/tasks/:taskId', (ctx: Context): void => {
@@ -58,7 +60,8 @@ taskRouter
       ctx.response.status = 204;
     }
     catch (e) {
-      ctx.throw(404, 'Task not found!')
+      ctx.response.status = 404;
+      ctx.body="Task not found!";
     }
   })
 

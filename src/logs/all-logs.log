@@ -1,0 +1,15 @@
+[2021-12-24T23:32:02.945] [WARN] out - POST  /boards/gyjyj?ujyum&frgrg=45  {"ujyum":"","frgrg":"45"}  -  405
+[2021-12-24T23:32:35.834] [INFO] out - POST  /boards  {}  [object Object]  201
+[2021-12-24T23:33:16.344] [INFO] out - POST  /boards  {}  [object Object]  201
+[2021-12-24T23:33:19.065] [INFO] out - POST  /boards  {}  [object Object]  201
+[2021-12-24T23:33:55.532] [INFO] out - POST  /boards  {}  [object Object]  201
+[2021-12-24T23:33:57.626] [INFO] out - POST  /boards  {}  [object Object]  201
+[2021-12-24T23:35:53.303] [INFO] out - POST  /boards  {}  {"id":"49442c0d-b6aa-49a4-bf66-1197b6e3c9e1","title":"new","columns":[{"title":"columnupdated1","order":1},{"title":"columnupdated2","order":2}]}  201
+[2021-12-24T23:35:55.466] [INFO] out - POST  /boards  {}  {"id":"cfd71cc0-f6fe-4d5e-acf0-6b06183b8084","title":"new","columns":[{"title":"columnupdated1","order":1},{"title":"columnupdated2","order":2}]}  201
+[2021-12-24T23:36:43.843] [INFO] out - POST  /boards  -  {"id":"3161343b-f375-4114-9c9e-0a4439a08c4b","title":"new","columns":[{"title":"columnupdated1","order":1},{"title":"columnupdated2","order":2}]}  201
+[2021-12-24T23:36:46.694] [INFO] out - POST  /boards  -  {"id":"b8035958-e60f-4482-9ac2-e466b9d82f59","title":"new","columns":[{"title":"columnupdated1","order":1},{"title":"columnupdated2","order":2}]}  201
+[2021-12-24T23:36:48.053] [INFO] out - POST  /boards  -  {"id":"66754a89-7836-42d6-91a3-d44c7de07d44","title":"new","columns":[{"title":"columnupdated1","order":1},{"title":"columnupdated2","order":2}]}  201
+[2021-12-24T23:37:28.334] [INFO] out - POST  /boards  -  -  201
+[2021-12-24T23:37:41.771] [INFO] out - POST  /boards  -  -  201
+[2021-12-24T23:38:03.918] [INFO] out - POST  /boards  -  -  201
+[2021-12-24T23:38:23.535] [INFO] out - POST  /boards  -  [object Object]  201

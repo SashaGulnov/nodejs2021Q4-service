@@ -21,7 +21,8 @@ userRouter
       ctx.body = User.toResponse(foundUser);
     }
     catch (e) {
-      ctx.throw(404, "User is not found")
+      ctx.response.status = 404;
+      ctx.body="User is not found";
     }
   })
   .post('/users', (ctx: Context): void => {
@@ -43,7 +44,8 @@ userRouter
       ctx.body = User.toResponse(updatedUser);
     }
     catch (e) {
-      ctx.throw(404, "User is not found")
+      ctx.response.status = 404;
+      ctx.body="User is not found";
     }
   })
   .delete('/users/:id', (ctx: Context): void => {
@@ -58,7 +60,8 @@ userRouter
       ctx.response.status = 204;
     }
     catch (e) {
-      ctx.throw(404, "User is not found")
+      ctx.response.status = 404;
+      ctx.body="User is not found";
     }
   })
 

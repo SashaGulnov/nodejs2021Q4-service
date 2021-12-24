@@ -1,10 +1,10 @@
-import Koa, { Context } from 'koa';
+import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-body';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { taskRouter } from './resources/tasks/task.router';
-// import { log4js } from './common/loggerConfig';
+import { logger } from './logger/middleLogger';
 
 
 const app = new Koa();
@@ -12,12 +12,16 @@ const app = new Koa();
 const rootRouter = new Router();
 
 
-rootRouter.get('/', (ctx: Context): void => {
+rootRouter.get('/', (ctx: Koa.Context): void => {
   ctx.body = "Service is running!";
 })
 
 
 app.use(bodyParser())
+  .use( ( ctx, next ) => {
+    logger(ctx, next)
+  }
+    )
   .use(rootRouter.routes())
   .use(userRouter.routes())
   .use(boardRouter.routes())

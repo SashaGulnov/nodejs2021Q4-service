@@ -20,7 +20,8 @@ boardRouter
       ctx.body = foundBoard
     }
     catch (e) {
-      ctx.throw(404, "Board not found!")
+      ctx.response.status = 404;
+      ctx.body="Board not found!";
     }
 
   })
@@ -42,7 +43,8 @@ boardRouter
       ctx.body = new Board(updatedBoard);
     }
     catch (e) {
-      ctx.throw(404, "Board not found!")
+      ctx.response.status = 404;
+      ctx.body="Board not found!";
     }
   })
   .delete('/boards/:id', (ctx: Context): void => {
@@ -56,7 +58,8 @@ boardRouter
       ctx.response.status = 204;
     }
     catch (e) {
-      ctx.throw(404, "Board not found!")
+      ctx.response.status = 404;
+      ctx.body="Board not found!";
 
     }
 

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 
-const logsFolder = path.join(__dirname, '/logs');
+const logsFolder = path.join(__dirname, '../logs');
 const allLogsPath = path.join(logsFolder, '/all-logs.log');
 const errorsLogsPath = path.join(logsFolder, '/errors-logs.log');
 
