@@ -1,5 +1,7 @@
 import { Context, Next } from 'koa';
 import { log4js } from './loggerConfig';
+import { LOG_LEVEL } from '../common/config';
+import { prettyPrint } from './printQuery';
 
 
 const logger = async (ctx: Context, next:Next):Promise<void> => {
@@ -9,25 +11,26 @@ const logger = async (ctx: Context, next:Next):Promise<void> => {
 
   await next();
 
-  const query = JSON.stringify(ctx.query);
-  const body = JSON.stringify(ctx.body);
-
-  
-  
+  const query = prettyPrint(ctx.query);
+  const body = prettyPrint(ctx.body);
   const status = ctx.res.statusCode;
-  const output = `${ctx.req.method}  ${ctx.url}  ${query.length>3?query:'-'}  ${body.length>3?body:'-'}  ${status}`;
+
+  const output = `${ctx.req.method}  ${ctx.url}  ${query}  ${body}  ${status}`;
   
-  if (status>=500) {
+  if (status >= 500) {
     errorLogger.error(output);
   }
 
-  else if (status >=400) {
-    allLogger.warn(output);
+  else if (status >= 400) {
+
+    if (Number(LOG_LEVEL)>0) {
+      allLogger.warn(output)
+    }
   }
 
-  else {
-    allLogger.info(output);
-  }
+  else if (Number(LOG_LEVEL)>1) {
+      allLogger.info(output)
+    }
 } 
 
 export {logger};
