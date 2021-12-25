@@ -11,6 +11,16 @@ const app = new Koa();
 
 const rootRouter = new Router();
 
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status =  500;
+    ctx.body = 'Internal error';
+    ctx.app.emit('error', err, ctx);
+  }
+})
+
 
 rootRouter.get('/', (ctx: Koa.Context): void => {
   ctx.body = "Service is running!";
@@ -30,16 +40,20 @@ app.use(bodyParser())
   .use(userRouter.allowedMethods())
   .use(boardRouter.allowedMethods())
   .use(taskRouter.allowedMethods())
+  
 
+process.on("unhandledRejection", () => {
+  logger(null, null);
+});
 
+process.on('uncaughtException', () => {
+  logger(null, null);
+});
 
-  process.on('uncaughtException', (error) => {
-    console.log(error);    
-  })
+app.on('error', (err) => {
 
-  process.on('unhandledRejection', (error)=>{
-    console.log(error);
-  })
-
+  console.log(err);
+  
+});
 
 export { app };

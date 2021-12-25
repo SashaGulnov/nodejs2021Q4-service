@@ -1,5 +1,10 @@
 import  log4js  from "koa-log4";
-import {allLogsPath, errorsLogsPath} from './checkLogsFiles'
+import path from 'path';
+
+
+const logsFolder = path.join(__dirname, '../logs');
+const allLogsPath = path.join(logsFolder, '/all-logs.log');
+const errorsLogsPath = path.join(logsFolder, '/errors-logs.log');
 
 log4js.configure({
   appenders: {
