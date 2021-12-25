@@ -6,26 +6,27 @@ const logsFolder = path.join(__dirname, '../logs');
 const allLogsPath = path.join(logsFolder, '/all-logs.log');
 const errorsLogsPath = path.join(logsFolder, '/errors-logs.log');
 
-async function upsertFile(name: string) {
+const upsertFile = async (name: string) => {
   try {
     // try to read file
     await fs.promises.readFile(name)
-  } catch (error) {
+  } catch {
     // create empty file, because it wasn't found
     await fs.promises.writeFile(name, '')
   }
 }
 
-try {
-  if (!fs.existsSync(logsFolder)) {
-    fs.mkdirSync(logsFolder);
+const createDir = async (dir:string) => {
+  try {
+    await fs.promises.access(dir, fs.constants.F_OK);
+  } 
+  catch {
+    await fs.promises.mkdir(dir);
     upsertFile(allLogsPath);
     upsertFile(errorsLogsPath);
   }
-  upsertFile(allLogsPath);
-  upsertFile(errorsLogsPath);
-} catch (err) {
-  console.error(err)
 }
+createDir(logsFolder);
+
 
 export {allLogsPath, errorsLogsPath}

@@ -18,7 +18,7 @@ rootRouter.get('/', (ctx: Koa.Context): void => {
 
 
 app.use(bodyParser())
-  .use( ( ctx, next ) => {
+  .use( ( ctx: Koa.Context, next:Koa.Next ) => {
     logger(ctx, next)
   }
     )
@@ -31,6 +31,15 @@ app.use(bodyParser())
   .use(boardRouter.allowedMethods())
   .use(taskRouter.allowedMethods())
 
+
+
+  process.on('uncaughtException', (error) => {
+    console.log(error);    
+  })
+
+  process.on('unhandledRejection', (error)=>{
+    console.log(error);
+  })
 
 
 export { app };
