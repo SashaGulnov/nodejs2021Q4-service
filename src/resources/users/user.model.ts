@@ -1,12 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-class User {
+@Entity()
+export class User {
+
+  @PrimaryGeneratedColumn()
   id: string;
 
+  @Column()
   name: string;
 
+  @Column()
   login: string;
 
+  @Column()
   password: string;
 
   constructor({
@@ -31,5 +38,3 @@ class User {
     return { id, name, login };
   }
 }
-
-export { User };

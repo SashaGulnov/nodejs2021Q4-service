@@ -5,12 +5,14 @@ services:
     build: ./
     command: npx nodemon --exec npx ts-node src/server.ts
     ports:
-      - 4000:4000
+      - ${PORT}:${PORT}
     networks:
       - net
     volumes:
       - applogs:/app/src/logs
     restart: on-failure:5
+    env_file:
+      - .env
 
   postgresdb:
     container_name: demo_postgres
@@ -26,6 +28,8 @@ services:
     volumes:
     - dbdata:/app/db/data
     restart: on-failure:5
+    env_file:
+      - .env
 networks:
   net:
     driver: bridge

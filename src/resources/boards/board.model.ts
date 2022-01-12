@@ -1,12 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
-
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 let order = 0;
+
+@Entity()
 class Board {
+    @PrimaryGeneratedColumn()
     id: string;
 
+    @Column()
     title: string;
 
+    @Column()
     columns: {
         id: string,
         title: string,
