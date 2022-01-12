@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 let order = 0;
 
 @Entity()
-class Board {
+export class Board {
     @PrimaryGeneratedColumn()
     id: string;
 
@@ -40,10 +40,5 @@ class Board {
                 }
     ); }
     );   
-     
-
   }
-
 }
-
-export {Board};

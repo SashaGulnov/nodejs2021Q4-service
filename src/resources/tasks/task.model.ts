@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-class Task {
+export class Task {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -42,7 +42,4 @@ class Task {
     this.columnId = columnId
 
   }
-
 }
-
-export { Task };
