@@ -17,6 +17,9 @@ export default {
    "migrations": [
       "src/migration/**/*.ts"
    ],
+   "cli": {
+        "migrationsDir": "migration"
+    },
    "subscribers": [
       "src/subscriber/**/*.ts"
    ]
