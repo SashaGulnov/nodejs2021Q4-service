@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { User } from '../users/user.model';
+import { Board } from '../boards/board.model';
+import { Columns } from '../columns/column.model';
 
 @Entity()
 export class Task {
@@ -18,11 +21,23 @@ export class Task {
   @Column()
   userId: string | null;
 
+  @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'userId' })
+  user!: User;
+
   @Column()
   boardId: string | null;
 
+  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'boardId' })
+  board!: Board;
+
   @Column()
   columnId: string | null;
+
+  @ManyToOne(() => Columns, (column) => column.tasks, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'columnId' })
+  column!: Columns;
 
   constructor({
     id = uuidv4(),

@@ -1,11 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Task } from '../tasks/task.model';
 
 @Entity()
 export class User {
 
   @PrimaryGeneratedColumn()
   id: string;
+
+  @OneToMany(() => Task, task => task.user)
+  tasks: Task[] | undefined
 
   @Column()
   name: string;

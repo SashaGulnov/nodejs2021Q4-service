@@ -1,10 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Task } from '../tasks/task.model';
-import { Columns } from '../columns/column.model';
 
 @Entity()
-export class Board {
+export class Columns {
     @PrimaryGeneratedColumn()
     id: string;
 
@@ -15,16 +14,11 @@ export class Board {
     title: string;
 
     @Column()
-    columns: Columns[];
+    order: number;
  
-  constructor(
-    columns: Columns[],
-    id = uuidv4(),
-    title = 'BOARD'
-    ) 
-    {
-        this.id = id;
-        this.title = title;
-        this.columns = columns;   
+  constructor(title: string, order: number) {
+    this.id = uuidv4();
+    this.title = title;
+    this.order = order;
   }
 }
