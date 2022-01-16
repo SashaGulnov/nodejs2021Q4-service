@@ -40,7 +40,7 @@ boardRouter
       const newOptions: Board = ctx.request.body;
       const updatedBoard = BoardsService.boardUpdate(foundBoard, newOptions);
 
-      ctx.body = new Board(updatedBoard);
+      ctx.body = updatedBoard;
     }
     catch (e) {
       ctx.response.status = 404;

@@ -6,25 +6,28 @@ import { Columns } from '../columns/column.model';
 @Entity()
 export class Board {
     @PrimaryGeneratedColumn()
+    @OneToMany(() => Task, task => task.userId)
     id: string;
 
-    @OneToMany(() => Task, task => task.user)
-    tasks: Task[] | undefined
-
-    @Column()
+    @Column({nullable: true})
     title: string;
 
-    @Column()
+    @Column('jsonb')
     columns: Columns[];
  
   constructor(
-    columns: Columns[],
-    id = uuidv4(),
-    title = 'BOARD'
+    body: Board
     ) 
     {
-        this.id = id;
-        this.title = title;
-        this.columns = columns;   
+      if (body) {
+        this.id = uuidv4();
+        this.title = body.title;
+        this.columns = body.columns.map((col) => new Columns(col.title, col.order));
+      }
+      else {
+        this.id = uuidv4();
+        this.title = 'Board';
+        this.columns = [];
+      }
   }
 }

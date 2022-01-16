@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from '../users/user.model';
 import { Board } from '../boards/board.model';
 import { Columns } from '../columns/column.model';
@@ -18,26 +18,17 @@ export class Task {
   @Column()
   description: string;
 
-  @Column()
+  @Column({type: 'varchar', nullable: true})
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'SET NULL' })
   userId: string | null;
 
-  @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'userId' })
-  user!: User;
-
-  @Column()
+  @Column({ type: 'varchar', nullable: true})
+  @ManyToOne(() => Board, (board) => board.id, { onDelete: 'CASCADE' })
   boardId: string | null;
 
-  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'boardId' })
-  board!: Board;
-
-  @Column()
+  @Column({type: 'varchar', nullable: true})
+  @ManyToOne(() => Columns, (column) => column.id, { onDelete: 'SET NULL' })
   columnId: string | null;
-
-  @ManyToOne(() => Columns, (column) => column.tasks, { onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'columnId' })
-  column!: Columns;
 
   constructor({
     id = uuidv4(),

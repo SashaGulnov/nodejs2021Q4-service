@@ -6,10 +6,8 @@ import { Task } from '../tasks/task.model';
 export class User {
 
   @PrimaryGeneratedColumn()
+  @OneToMany(() => Task, task => task.userId)
   id: string;
-
-  @OneToMany(() => Task, task => task.user)
-  tasks: Task[] | undefined
 
   @Column()
   name: string;

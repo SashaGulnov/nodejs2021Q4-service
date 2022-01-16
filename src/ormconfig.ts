@@ -15,10 +15,10 @@ export default {
       "src/resources/**/*model.ts"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+      "src/migrations/**/*.ts"
    ],
    "cli": {
-        "migrationsDir": "migration"
+        "migrationsDir": "src/migrations"
     },
    "subscribers": [
       "src/subscriber/**/*.ts"

@@ -5,10 +5,8 @@ import { Task } from '../tasks/task.model';
 @Entity()
 export class Columns {
     @PrimaryGeneratedColumn()
+    @OneToMany(() => Task, task => task.columnId)
     id: string;
-
-    @OneToMany(() => Task, task => task.user)
-    tasks: Task[] | undefined
 
     @Column()
     title: string;

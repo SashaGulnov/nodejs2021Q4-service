@@ -1,10 +1,20 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-body';
+import { createConnection } from 'typeorm';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { taskRouter } from './resources/tasks/task.router';
 import { logger } from './logger/middleLogger';
+import ConnectionOptions from './ormconfig';
+
+
+createConnection(ConnectionOptions)
+  .then(async connection => {
+    // here you can start to work with your entities
+    await connection.runMigrations();
+})
+  .catch(error => console.log(error));
 
 
 const app = new Koa();

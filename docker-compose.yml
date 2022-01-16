@@ -10,7 +10,7 @@ services:
       - net
     volumes:
       - applogs:/app/src/logs
-    restart: on-failure:5
+    restart: always
     env_file:
       - .env
 
@@ -21,13 +21,15 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: "/db/data"
+    ports:
+      - ${PGPORT}:${PGPORT}
     depends_on:
       - nodeapp
     networks:
       - net
     volumes:
     - dbdata:/app/db/data
-    restart: on-failure:5
+    restart: always
     env_file:
       - .env
 networks:
