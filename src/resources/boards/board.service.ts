@@ -1,5 +1,4 @@
-import { boardsArray } from './board.memory';
-import { TasksService } from '../tasks/task.service';
+import * as boardRepo from './board.repository';
 import { Board } from './board.model'
 
 class BoardsService {
@@ -8,63 +7,37 @@ class BoardsService {
    * Retuns the array of all the boards
    * @returns the array of all the boards 
    */
-  static getAll = (): Board[] => boardsArray;
+  static getAllBoards = () => boardRepo.getAll();
 
   /**
    * Returns board - instance of class Board
    * @param boardId - id of searching board string
-   * @returns foundBoard - instance of class Board
+   * @returns foundBoard - Promise of class Board
    */
-  static boardSearch = (boardId: Board['id']): Board | undefined => {
-
-    const foundBoard: Board | undefined = boardsArray.find(board => board.id === boardId);
-    return foundBoard;
-  }
+  static getBoard = (boardId: Board['id']) => boardRepo.getById(boardId)
 
   /**
    * Posts board and returns posted board - instance of class Board
    * @param board - board to post - instance of class Board
    * @returns posted board - instance of class Board
    */
-  static boardPost = (board: Board) => {
-    boardsArray.push(board);
-    return board
-  }
+  static boardPost = (board: Board) => boardRepo.addBoard(board)
 
 
-/**
- * Updates board and returns updated board - instance of class Board
- * @param foundBoard - board to update - instance of class Board
- * @param newOptions - requested object with options to update foundBoard - instance of class Board
- * @returns updated board - instance of class Board
- */
-  static boardUpdate = (foundBoard: Board, newOptions: Board): Board => {
-
-    const boardIndex = boardsArray.indexOf(foundBoard);
-    const updatedBoard: Board = {
-      "id": foundBoard.id,
-      "title": newOptions.title,
-      "columns": newOptions.columns,
-    }
-    boardsArray[boardIndex] = updatedBoard
-    return updatedBoard;
-  }
+  /**
+   * Updates board and returns updated board - instance of class Board
+   * @param boardId - id of board to update 
+   * @param newOptions - requested object with options to update foundBoard - instance of class Board
+   * @returns updated board - instance of class Board
+   */
+  static boardUpdate = (boardId: Board['id'], newOptions: Board) => boardRepo.updateBoard(boardId, newOptions)
 
   /**
    * Deletes board, all tasks on the board and returns array of rest boards
-   * @param foundBoard - board to delete - instance of class Board
-   * @returns array of rest boards
+   * @param boardId - id of board to delete
+   * @returns void
    */
-  static boardDelete = (foundBoard: Board): typeof boardsArray => {
-
-    const boardIndex: number = boardsArray.indexOf(foundBoard);
-
-    boardsArray.splice(boardIndex, 1);
-
-    const tasks = TasksService.getAll(foundBoard.id);
-    tasks.map(task => TasksService.taskDelete(task))
-    return boardsArray;
-  }
+  static boardDelete = (boardId: Board['id']) => boardRepo.deleteBoard(boardId)
 }
 
 export { BoardsService }

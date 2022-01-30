@@ -7,59 +7,49 @@ const boardRouter = new Router();
 
 
 boardRouter
-  .get('/boards', (ctx: Context): void => {
-    ctx.body = BoardsService.getAll();
+  .get('/boards', async (ctx: Context): Promise<void> => {
+    ctx.body = await BoardsService.getAllBoards();
   })
-  .get('/boards/:id', (ctx: Context): void => {
+  .get('/boards/:id', async (ctx: Context): Promise<void> => {
     try {
       const boardId: Board["id"] = ctx.params.id;
-      const foundBoard = BoardsService.boardSearch(boardId);
-      if (foundBoard === undefined) {
-        throw new Error("Board not found!")
-      }
-      ctx.body = foundBoard
+      ctx.body = await BoardsService.getBoard(boardId);
     }
     catch (e) {
       ctx.response.status = 404;
-      ctx.body="Board not found!";
+      ctx.body = "Board not found!";
     }
-
   })
-  .post('/boards', (ctx: Context): void => {
-    const board = new Board(ctx.request.body);
-    ctx.response.status = 201;
-    ctx.body = BoardsService.boardPost(board);
+  .post('/boards', async (ctx: Context): Promise<void> => {
+    try {
+      ctx.response.status = 201;
+      ctx.body = await BoardsService.boardPost(ctx.request.body);
+    }
+    catch (e) {
+      ctx.response.status = 404;
+      ctx.body = "Board not found!";
+    }
   })
-  .put('/boards/:id', (ctx: Context): void => {
+  .put('/boards/:id', async (ctx: Context): Promise<void> => {
     try {
       const boardId: Board["id"] = ctx.params.id;
-      const foundBoard = BoardsService.boardSearch(boardId);
-      if (foundBoard === undefined) {
-        throw new Error("Board not found!")
-      }
       const newOptions: Board = ctx.request.body;
-      const updatedBoard = BoardsService.boardUpdate(foundBoard, newOptions);
-
-      ctx.body = updatedBoard;
+      ctx.body = await BoardsService.boardUpdate(boardId, newOptions);
     }
     catch (e) {
       ctx.response.status = 404;
-      ctx.body="Board not found!";
+      ctx.body = "Board not found!";
     }
   })
-  .delete('/boards/:id', (ctx: Context): void => {
+  .delete('/boards/:id', async (ctx: Context): Promise<void> => {
     try {
       const boardId: Board["id"] = ctx.params.id;
-      const foundBoard = BoardsService.boardSearch(boardId);
-      if (foundBoard === undefined) {
-        throw new Error("Board not found!")
-      }
-      BoardsService.boardDelete(foundBoard);
+      await BoardsService.boardDelete(boardId);
       ctx.response.status = 204;
     }
     catch (e) {
       ctx.response.status = 404;
-      ctx.body="Board not found!";
+      ctx.body = "Board not found!";
 
     }
 
