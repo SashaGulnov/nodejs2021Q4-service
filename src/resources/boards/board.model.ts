@@ -11,7 +11,10 @@ export class Board {
   @Column({ nullable: true })
   title!: string;
 
-  @Column('jsonb')
+  @OneToMany(() => Columns, columns => columns.board, {
+    cascade: true,
+    eager: true,
+  })
   columns!: Columns[];
 
 }

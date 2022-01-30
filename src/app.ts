@@ -13,8 +13,9 @@ createConnection(ConnectionOptions)
   .then(async connection => {
     // here you can start to work with your entities
     await connection.runMigrations();
-})
+  })
   .catch(error => console.log(error));
+
 
 
 const app = new Koa();
@@ -25,7 +26,7 @@ app.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {
-    ctx.status =  500;
+    ctx.status = 500;
     ctx.body = 'Internal error';
     ctx.app.emit('error', err, ctx);
   }
@@ -38,10 +39,10 @@ rootRouter.get('/', (ctx: Koa.Context): void => {
 
 
 app.use(bodyParser())
-  .use( ( ctx: Koa.Context, next:Koa.Next ) => {
+  .use((ctx: Koa.Context, next: Koa.Next) => {
     logger(ctx, next)
   }
-    )
+  )
   .use(rootRouter.routes())
   .use(userRouter.routes())
   .use(boardRouter.routes())
@@ -50,7 +51,7 @@ app.use(bodyParser())
   .use(userRouter.allowedMethods())
   .use(boardRouter.allowedMethods())
   .use(taskRouter.allowedMethods())
-  
+
 
 process.on("unhandledRejection", () => {
   logger(null, null);
@@ -63,7 +64,7 @@ process.on('uncaughtException', () => {
 app.on('error', (err) => {
 
   console.log(err);
-  
+
 });
 
 export { app };

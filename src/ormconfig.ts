@@ -1,10 +1,10 @@
-import {ConnectionOptions} from "typeorm";
-import {PGPORT, DB_USERNAME, DB_PASSWORD, DB_NAME} from './common/config'
+import { ConnectionOptions } from "typeorm";
+import { PGPORT, DB_USERNAME, DB_PASSWORD, DB_NAME } from './common/config'
 
 
 export default {
    "type": "postgres",
-   "host": "localhost",
+   "host": "postgresdb",
    "port": PGPORT,
    "username": DB_USERNAME,
    "password": DB_PASSWORD,
@@ -18,8 +18,8 @@ export default {
       "src/migrations/**/*.ts"
    ],
    "cli": {
-        "migrationsDir": "src/migrations"
-    },
+      "migrationsDir": "src/migrations"
+   },
    "subscribers": [
       "src/subscriber/**/*.ts"
    ]

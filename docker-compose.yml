@@ -2,8 +2,7 @@ version: "3.8"
 
 services:
   nodeapp:
-    build: ./
-    command: npx nodemon --exec npx ts-node src/server.ts
+    build: .
     ports:
       - ${PORT}:${PORT}
     networks:
@@ -13,6 +12,8 @@ services:
     restart: always
     env_file:
       - .env
+    depends_on:
+      - postgresdb
 
   postgresdb:
     container_name: demo_postgres
@@ -23,21 +24,16 @@ services:
       PGDATA: "/db/data"
     ports:
       - ${PGPORT}:${PGPORT}
-    depends_on:
-      - nodeapp
     networks:
       - net
     volumes:
-    - dbdata:/app/db/data
+      - dbdata:/app/db/data
     restart: always
     env_file:
       - .env
 networks:
   net:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.10.0.0/24
 volumes:
   applogs:
   dbdata:

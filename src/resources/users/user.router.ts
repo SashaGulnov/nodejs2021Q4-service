@@ -9,6 +9,7 @@ const userRouter = new Router();
 userRouter
   .get('/users', async (ctx: Context): Promise<void> => {
     try {
+      ctx.set('Content-Type', 'application/json');
       ctx.body = UsersService.getAllUsers()
     }
     catch (e) {

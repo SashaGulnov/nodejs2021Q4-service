@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import { Board } from "../boards/board.model";
 import { Task } from '../tasks/task.model';
 
 @Entity()
@@ -12,4 +13,9 @@ export class Columns {
 
   @Column()
   order!: number;
+
+  @ManyToOne(() => Board, board => board.columns, {
+    onDelete: 'CASCADE',
+  })
+  board!: Board;
 }

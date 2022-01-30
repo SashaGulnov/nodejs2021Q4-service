@@ -2,5 +2,6 @@
   "watch": "src/**/*.ts",
   "execMap": {
     "ts": "ts-node"
-  }
+  },
+  "restartable": "rs"
 }
